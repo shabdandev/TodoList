@@ -1,5 +1,5 @@
 import TodoList from "@/components/TodoList/TodoList";
+import { FC } from "react";
 
-const page = <TodoList />;
-
+const page: FC = () => <TodoList />;
 export default page;

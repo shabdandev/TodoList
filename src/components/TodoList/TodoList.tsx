@@ -5,6 +5,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { usePostProductMutation } from "@/redux/api/postPr";
 import { useUploadMutation } from "@/redux/api/upload";
 import { useGetProductQuery } from "@/redux/api/getPr";
+import { useDeleteProductMutation } from "@/redux/api/delPr";
 // import { useDeleteProductMutation } from "@/redux/api/delPr";
 // import { useEditProducMutation } from "@/redux/api/editPr";
 
@@ -27,7 +28,7 @@ const TodoList: FC = () => {
   const { data } = useGetProductQuery();
   const [uploadMutation] = useUploadMutation();
   const [postProductMutation] = usePostProductMutation();
-  //   const [deleteProductMutation] = useDeleteProductMutation();
+  const [deleteProductMutation] = useDeleteProductMutation();
   //   const [editProducMutation] = useEditProducMutation();
 
   const postPr: SubmitHandler<ITodo> = async (data) => {
@@ -44,10 +45,10 @@ const TodoList: FC = () => {
     reset();
   };
 
-  //   const delPr = async (id: number) => {
-  //     const { data } = await deleteProductMutation(id);
-  //     console.log("🚀 ~ delPr ~ data:", data);
-  //   };
+  const delPr = async (id: number) => {
+    const { data } = await deleteProductMutation(id);
+    console.log("🚀 ~ delPr ~ data:", data);
+  };
 
   return (
     <section className={scss.TodoList}>
@@ -81,7 +82,7 @@ const TodoList: FC = () => {
                 <img src={item.image} alt="" />
                 <h2>{item.name}</h2>
                 <h2>{item.description}</h2>
-                <button>delete</button>
+                <button onClick={() => delPr(item.id!)}>delete</button>
                 <button>edit</button>
               </div>
             ))}

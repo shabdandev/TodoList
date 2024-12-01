@@ -3,7 +3,7 @@ namespace TODO {
     id: number;
     name: string;
     description: string;
-    image: string;
-  };
+    image: string | file;
+  }[];
   type getRequest = void;
 }
