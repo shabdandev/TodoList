@@ -5,8 +5,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { usePostProductMutation } from "@/redux/api/postPr";
 import { useUploadMutation } from "@/redux/api/upload";
 import { useGetProductQuery } from "@/redux/api/getPr";
-import { useDeleteProductMutation } from "@/redux/api/delPr";
-import { useEditProducMutation } from "@/redux/api/editPr";
+// import { useDeleteProductMutation } from "@/redux/api/delPr";
+// import { useEditProducMutation } from "@/redux/api/editPr";
 
 interface ITodo {
   id?: number | null;
@@ -18,17 +18,17 @@ interface ITodo {
 
 const TodoList: FC = () => {
   const { register, reset, handleSubmit } = useForm<ITodo>();
-  const [isEdit, setIsEdit] = useState<ITodo>({
-    description: "",
-    image: "",
-    name: "",
-    id: null,
-  });
+  //   const [isEdit, setIsEdit] = useState<ITodo>({
+  //     description: "",
+  //     image: "",
+  //     name: "",
+  //     id: null,
+  //   });
   const { data } = useGetProductQuery();
   const [uploadMutation] = useUploadMutation();
   const [postProductMutation] = usePostProductMutation();
-  const [deleteProductMutation] = useDeleteProductMutation();
-  const [editProducMutation] = useEditProducMutation();
+  //   const [deleteProductMutation] = useDeleteProductMutation();
+  //   const [editProducMutation] = useEditProducMutation();
 
   const postPr: SubmitHandler<ITodo> = async (data) => {
     const formData = new FormData();
@@ -44,95 +44,48 @@ const TodoList: FC = () => {
     reset();
   };
 
-  const delPr = async (id: number) => {
-    const { data } = await deleteProductMutation(id);
-    console.log("🚀 ~ delPr ~ data:", data);
-  };
-
-  const editProduct = async () => {
-    const edited: ITodo = {
-      description: isEdit.description,
-      image: isEdit.image,
-      name: isEdit.name,
-    };
-    const { data: res } = await editProducMutation({
-      id: isEdit.id!,
-      edited: edited,
-    });
-    console.log("🚀 ~ editProduct ~ res:", res);
-    setIsEdit({
-      description: "",
-      image: "",
-      name: "",
-      id: null,
-    });
-  };
+  //   const delPr = async (id: number) => {
+  //     const { data } = await deleteProductMutation(id);
+  //     console.log("🚀 ~ delPr ~ data:", data);
+  //   };
 
   return (
     <section className={scss.TodoList}>
       <div className="container">
         <div className={scss.content}>
-          {isEdit.id ? (
-            <div>
-              <form onSubmit={handleSubmit(postPr)}>
-                <input
-                  type="file"
-                  placeholder="image"
-                  {...register("image", { required: true })}
-                />
-                <input
-                  type="text"
-                  placeholder="name"
-                  {...register("name", {
-                    required: true,
-                  })}
-                />
-                <input
-                  type="text"
-                  placeholder="description"
-                  {...register("description", {
-                    required: true,
-                  })}
-                />
-                <button type="submit">Add Todo</button>
-              </form>
-              {data?.map((item, index) => (
-                <div key={index}>
-                  <img src={item.image} alt="" />
-                  <h2>{item.name}</h2>
-                  <h2>{item.description}</h2>
-                  <button onClick={() => delPr(item.id)}>delete</button>
-                  <button>edit</button>
-                </div>
-              ))}
-            </div>
-          ) : (
+          <div>
             <form onSubmit={handleSubmit(postPr)}>
               <input
                 type="file"
                 placeholder="image"
-                value={isEdit.image}
-                onChange={(e) =>
-                  setIsEdit({ ...isEdit, image: e.target.value })
-                }
+                {...register("image", { required: true })}
               />
               <input
                 type="text"
                 placeholder="name"
-                value={isEdit.name}
-                onChange={(e) => setIsEdit({ ...isEdit, name: e.target.value })}
+                {...register("name", {
+                  required: true,
+                })}
               />
               <input
                 type="text"
                 placeholder="description"
-                value={isEdit.description}
-                onChange={(e) =>
-                  setIsEdit({ ...isEdit, description: e.target.value })
-                }
+                {...register("description", {
+                  required: true,
+                })}
               />
               <button type="submit">Add Todo</button>
             </form>
-          )}
+            {data?.map((item, index) => (
+              <div key={index}>
+                <img src={item.image} alt="" />
+                <h2>{item.name}</h2>
+                <h2>{item.description}</h2>
+                <button>delete</button>
+                <button>edit</button>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
