@@ -1,7 +1,7 @@
 namespace TODO {
   type editResponse = {
     id: number;
-    title: string;
+    name: string;
     description: string;
     image: string;
   };
@@ -9,7 +9,7 @@ namespace TODO {
   type editRequest = {
     id: number;
     edited: {
-      title: string;
+      name: string;
       description: string;
       image: string;
     };

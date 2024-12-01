@@ -1,12 +1,12 @@
 namespace TODO {
   type postResponse = {
     id: number;
-    title: string;
+    name: string;
     description: string;
     image: string;
   };
   type postRequest = {
-    title: string;
+    name: string;
     description: string;
     image: string;
   };

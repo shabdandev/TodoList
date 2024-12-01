@@ -1,7 +1,7 @@
 namespace TODO {
   type deleteResponse = {
     id: number;
-    title: string;
+    name: string;
     description: string;
     image: string;
   };
