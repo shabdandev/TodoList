@@ -1,6 +1,6 @@
 namespace TODO {
   type getResponse = {
-    id: number;
+    _id: number;
     name: string;
     description: string;
     image: string | file;

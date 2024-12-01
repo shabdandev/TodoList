@@ -9,7 +9,7 @@ import { useDeleteProductMutation } from "@/redux/api/delPr";
 import { useEditProducMutation } from "@/redux/api/editPr";
 
 interface ITodo {
-  id?: number | null;
+  _id?: number | null;
   image: string;
   name: string;
   description: string;
@@ -22,7 +22,7 @@ const TodoList: FC = () => {
     description: "",
     image: "",
     name: "",
-    id: null,
+    _id: null,
   });
   const { data } = useGetProductQuery();
   const [uploadMutation] = useUploadMutation();
@@ -56,7 +56,7 @@ const TodoList: FC = () => {
       name: isEdit.name,
     };
     const { data: res } = await editProducMutation({
-      id: isEdit.id!,
+      _id: isEdit._id!,
       edited: edited,
     });
     console.log("🚀 ~ editProduct ~ res:", res);
@@ -64,7 +64,7 @@ const TodoList: FC = () => {
       description: "",
       image: "",
       name: "",
-      id: null,
+      _id: null,
     });
   };
 
@@ -72,13 +72,13 @@ const TodoList: FC = () => {
     <section className={scss.TodoList}>
       <div className="container">
         <div className={scss.content}>
-          {isEdit.id ? (
+          {!isEdit._id ? (
             <div>
               <form onSubmit={handleSubmit(postPr)}>
                 <input
                   type="file"
                   placeholder="image"
-                  {...register("image", { required: true })}
+                  {...register("file", { required: true })}
                 />
                 <input
                   type="text"
@@ -98,11 +98,22 @@ const TodoList: FC = () => {
               </form>
               {data?.map((item, index) => (
                 <div key={index}>
-                  <img src={item.image} alt="" />
+                  <img src={item.image} alt="image Todo-List" />
                   <h2>{item.name}</h2>
                   <h2>{item.description}</h2>
-                  <button onClick={() => delPr(item.id!)}>delete</button>
-                  <button>edit</button>
+                  <button onClick={() => delPr(item._id!)}>delete</button>
+                  <button
+                    onClick={() =>
+                      setIsEdit({
+                        description: item.description,
+                        image: item.image,
+                        name: item.name,
+                        _id: item._id,
+                      })
+                    }
+                  >
+                    edit
+                  </button>
                 </div>
               ))}
             </div>

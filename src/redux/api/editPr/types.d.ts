@@ -1,13 +1,13 @@
 namespace TODO {
   type editResponse = {
-    id: number;
+    _id: number;
     name: string;
     description: string;
     image: string;
   };
 
   type editRequest = {
-    id: number;
+    _id: number;
     edited: {
       name: string;
       description: string;
